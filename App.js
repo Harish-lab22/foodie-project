@@ -5,7 +5,7 @@ import {
   Route
 } from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -17,9 +17,13 @@ import Register from "./pages/Register";
 
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Admin from "./pages/Admin";
 function App() {
 
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+  const savedCart = localStorage.getItem("cart");
+  return savedCart ? JSON.parse(savedCart) : [];
+});
 
   const addToCart = (food) => {
 
@@ -96,15 +100,19 @@ function App() {
 
     setCart(updatedCart);
   };
-
+useEffect(() => {
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+}, [cart]);
   return (
 
     <BrowserRouter>
 
-      <Navbar />
+  <Navbar cart={cart} />
 
-      <Routes>
-
+  <Routes>
         <Route
           path="/"
           element={
@@ -144,6 +152,10 @@ function App() {
 <Route
   path="/success"
   element={<OrderSuccess />}
+/>
+<Route
+  path="/admin"
+  element={<Admin />}
 />
       </Routes>
 
