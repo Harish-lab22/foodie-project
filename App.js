@@ -1,3 +1,5 @@
+
+import Orders from "./pages/Orders";
 import OrderSuccess from "./pages/OrderSuccess";
 import {
   BrowserRouter,
@@ -153,6 +155,11 @@ useEffect(() => {
   path="/success"
   element={<OrderSuccess />}
 />
+<Route
+  path="/orders"
+  element={<Orders />}
+/>
+
 <Route
   path="/admin"
   element={<Admin />}
